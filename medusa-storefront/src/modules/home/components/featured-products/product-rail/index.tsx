@@ -1,21 +1,21 @@
-import { Region } from "@medusajs/medusa"
-import { Text } from "@medusajs/ui"
+import { Region } from "@medusajs/medusa";
+import { Text } from "@medusajs/ui";
 
-import InteractiveLink from "@modules/common/components/interactive-link"
-import ProductPreview from "@modules/products/components/product-preview"
-import { ProductCollectionWithPreviews } from "types/global"
+import InteractiveLink from "@modules/common/components/interactive-link";
+import ProductPreview from "@modules/products/components/product-preview";
+import { ProductCollectionWithPreviews } from "types/global";
 
 export default function ProductRail({
   collection,
   region,
 }: {
-  collection: ProductCollectionWithPreviews
-  region: Region
+  collection: ProductCollectionWithPreviews;
+  region: Region;
 }) {
-  const { products } = collection
+  const { products } = collection;
 
   if (!products) {
-    return null
+    return null;
   }
 
   return (
@@ -39,5 +39,5 @@ export default function ProductRail({
           ))}
       </ul>
     </div>
-  )
+  );
 }
