@@ -1,10 +1,11 @@
-import { Image as MedusaImage } from "@medusajs/medusa"
-import { Container } from "@medusajs/ui"
-import Image from "next/image"
+import { Image as MedusaImage } from "@medusajs/medusa";
+import { Container } from "@medusajs/ui";
+import PlaceholderImage from "@modules/common/icons/placeholder-image";
+import Image from "next/image";
 
 type ImageGalleryProps = {
-  images: MedusaImage[]
-}
+  images: MedusaImage[];
+};
 
 const ImageGallery = ({ images }: ImageGalleryProps) => {
   return (
@@ -29,11 +30,16 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
                 }}
               />
             </Container>
-          )
+          );
         })}
+        {images.length === 0 && (
+          <Container className="relative aspect-[29/34] w-full overflow-hidden bg-ui-bg-subtle flex items-center">
+            <PlaceholderImage className="w-full h-[50px]" />
+          </Container>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ImageGallery
+export default ImageGallery;
