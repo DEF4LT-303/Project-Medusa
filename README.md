@@ -48,6 +48,7 @@ To access the admin panel, the db needs to be seeded with dummy data
 ```shell
 npm run seed
 ```
+[!] It takes a while to seed, if the admin user in the db doesn't show up, please try seeding again.
 
 ### Start the server
 Start the medusa backend + admin panel
