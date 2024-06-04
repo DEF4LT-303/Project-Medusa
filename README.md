@@ -36,7 +36,6 @@ cp .env.template .env
 ```
 
 - Add [Supabase](https://supabase.com "Supabase") postgresql connection URI
-- Add [Meilisearch](https://www.meilisearch.com "Meilisearch") creds for search functionality to work [optional]
 
 ### Install dependencies
 Install the required dependencies
@@ -74,7 +73,6 @@ Once backend is running, navigate to the storefront and add environment variable
 cd medusa-storefront/
 cp .env.template .env.local
 ```
-- Set up the meilisearch instance for search functionality [optional]
 
 ### Install dependencies
 Install the required dependencies
