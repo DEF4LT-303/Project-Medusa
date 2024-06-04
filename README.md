@@ -22,9 +22,9 @@ Admin Panel: https://project-medusa-backend.vercel.app/
 # How to run locally
 
 ### Clone the repo
-Start by cloning [this repo](http://https://github.com/DEF4LT-303/Project-Medusa "this repo")
+Start by cloning [this repo](https://github.com/DEF4LT-303/Project-Medusa/tree/starter "this repo")
 ```shell
-git clone https://github.com/DEF4LT-303/Project-Medusa.git
+git clone -b starter https://github.com/DEF4LT-303/Project-Medusa.git
 ```
 
 # Setting up the Backend
