@@ -18,9 +18,9 @@ const Navbar = ({ customer }: NavbarProps) => {
   const user = customer;
 
   return (
-    <div className="bg-background sticky z-50 top-0 inset-x-0 h-16">
-      <MaxWidthWrapper>
-        <header className="relative bg-background">
+    <div className="bg-background border-gray-500 sticky z-50 top-0 inset-x-0 h-16">
+      <header className="relative bg-background">
+        <MaxWidthWrapper>
           <div className="border-b border-gray-500">
             <div className="flex h-16 items-center">
               <MobileNav />
@@ -98,8 +98,8 @@ const Navbar = ({ customer }: NavbarProps) => {
               </div>
             </div>
           </div>
-        </header>
-      </MaxWidthWrapper>
+        </MaxWidthWrapper>
+      </header>
     </div>
   );
 };
