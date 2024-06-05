@@ -3,6 +3,7 @@
 import Link from "next/link";
 import * as React from "react";
 
+import { signOut } from "@/app/actions/sign-in";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,6 +21,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { Customer } from "@medusajs/medusa";
 import { ShoppingCart, User } from "lucide-react";
 import { useState } from "react";
 import MaxWidthWrapper from "../MaxWidthWrapper";
@@ -65,12 +67,17 @@ const ListItem = React.forwardRef<
 });
 ListItem.displayName = "ListItem";
 
-interface NavbarProps {
-  user: boolean;
-}
+type NavbarProps = {
+  customer: Omit<Customer, "password_hash"> | null;
+};
 
-const Navbar = ({ user }: NavbarProps) => {
+const Navbar = ({ customer }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const user = customer;
+
+  const handleLogout = async () => {
+    await signOut();
+  };
 
   return (
     <>
@@ -257,11 +264,11 @@ const Navbar = ({ user }: NavbarProps) => {
                           aria-hidden="true"
                         />
                         <NavigationMenuItem>
-                          <Link href="/profile" legacyBehavior passHref>
+                          <Link href="/" legacyBehavior passHref>
                             <NavigationMenuLink
                               className={navigationMenuTriggerStyle()}
                             >
-                              <User />
+                              <User onClick={handleLogout} />
                             </NavigationMenuLink>
                           </Link>
                         </NavigationMenuItem>

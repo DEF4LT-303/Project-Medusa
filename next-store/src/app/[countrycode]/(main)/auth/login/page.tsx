@@ -1,6 +1,6 @@
 import { LoginForm } from "@/components/auth/login-template";
 
-const LoginPage = () => {
+const LoginPage = async () => {
   return (
     <div className="bg-primary-foreground">
       <LoginForm />
