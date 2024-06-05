@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormState } from "react-dom";
+import { FormError } from "../form-message/form-message";
 
 export function LoginForm() {
   const [message, formAction] = useFormState(logCustomerIn, null);
@@ -52,6 +53,7 @@ export function LoginForm() {
                 </div>
                 <Input id="password" name="password" type="password" required />
               </div>
+              <FormError message={message} />
               <Button type="submit" className="w-full">
                 Login
               </Button>
