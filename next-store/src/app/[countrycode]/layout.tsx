@@ -1,5 +1,7 @@
 "use client";
 
+import Footer from "@/components/Footer";
+import Navbar from "@/components/navigation/Navbar";
 import { QueryClient } from "@tanstack/react-query";
 import { MedusaProvider } from "medusa-react";
 
@@ -17,7 +19,9 @@ export default function GeneralLayout({
         queryClientProviderProps={{ client: queryClient }}
         baseUrl={backendUrl}
       >
+        <Navbar user={false} />
         {children}
+        <Footer />
       </MedusaProvider>
     </section>
   );
