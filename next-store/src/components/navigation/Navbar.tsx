@@ -3,7 +3,6 @@
 import Link from "next/link";
 import * as React from "react";
 
-import { signOut } from "@/app/actions/sign-in";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -74,10 +73,6 @@ type NavbarProps = {
 const Navbar = ({ customer }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const user = customer;
-
-  const handleLogout = async () => {
-    await signOut();
-  };
 
   return (
     <>
@@ -264,11 +259,11 @@ const Navbar = ({ customer }: NavbarProps) => {
                           aria-hidden="true"
                         />
                         <NavigationMenuItem>
-                          <Link href="/" legacyBehavior passHref>
+                          <Link href="/account" legacyBehavior passHref>
                             <NavigationMenuLink
                               className={navigationMenuTriggerStyle()}
                             >
-                              <User onClick={handleLogout} />
+                              <User />
                             </NavigationMenuLink>
                           </Link>
                         </NavigationMenuItem>

@@ -3,7 +3,6 @@
 import { getToken } from "@/lib/data";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export async function logCustomerIn(
   _currentState: unknown,
@@ -22,11 +21,11 @@ export async function logCustomerIn(
   }
 }
 
-export async function signOut() {
+export async function signOut(countrycode: string) {
   cookies().set("_medusa_jwt", "", {
     maxAge: -1,
   })
   revalidateTag("auth")
   revalidateTag("customer")
-  redirect(`/`)
+
 }
