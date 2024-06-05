@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
+import { NextUIProvider } from "@nextui-org/react";
 import type { Metadata } from "next";
 import { Inter as FontSans, Inter } from "next/font/google";
 import "./globals.css";
@@ -36,7 +37,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <NextUIProvider>{children}</NextUIProvider>
         </ThemeProvider>
       </body>
     </html>

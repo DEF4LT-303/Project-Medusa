@@ -26,7 +26,7 @@ const getMedusaHeaders = (tags: string[] = []) => {
   return headers
 }
 
-
+// User APIs
 export async function getToken(credentials: StorePostAuthReq) {
   return medusaClient.auth
     .getToken(credentials, {
@@ -65,4 +65,14 @@ export async function getCustomer() {
     .retrieve(headers)
     .then(({ customer }) => customer)
     .catch((err) => null)
+}
+
+// Product APIs
+export async function getProducts() {
+  const headers = getMedusaHeaders(["products"])
+
+  return medusaClient.products
+    .list(headers)
+    .then(({ products }) => products)
+    .catch((err) => medusaError(err))
 }

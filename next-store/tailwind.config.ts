@@ -1,5 +1,5 @@
-import type { Config } from "tailwindcss"
-const { fontFamily } = require("tailwindcss/defaultTheme")
+import type { Config } from "tailwindcss";
+const { nextui } = require("@nextui-org/react");
 
 const config = {
   darkMode: ["class"],
@@ -8,6 +8,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   prefix: "",
   theme: {
@@ -15,13 +16,12 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1536px",
+        "xl": "1280px",
+        "xs": "320px",
       },
     },
     extend: {
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -78,7 +78,8 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  darkmode: "class",
+  plugins: [require("tailwindcss-animate"), nextui()],
 } satisfies Config
 
 export default config

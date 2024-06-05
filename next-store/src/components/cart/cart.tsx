@@ -13,12 +13,14 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 
-import { Badge } from "../ui/badge";
-import { Separator } from "../ui/separator";
+import { Badge } from "@nextui-org/react";
+import { Separator } from "@radix-ui/react-separator";
+import { useProducts } from "medusa-react";
 import CartItem from "./cart-item";
 
 const Cart = () => {
-  const itemCount = 0;
+  const { products, isLoading } = useProducts({ limit: 3 });
+  const itemCount = 3;
   const fee = 1;
 
   return (
@@ -30,6 +32,8 @@ const Cart = () => {
         {itemCount > 0 ? (
           <Badge
             color="primary"
+            content={itemCount}
+            shape="circle"
             className="absolute top-1 -right-0 flex items-center justify-center w-5 h-5 bg-red-500 text-primary-background text-sm rounded-full shadow-md"
           >
             <ShoppingCart className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500" />
@@ -42,11 +46,11 @@ const Cart = () => {
         <SheetHeader className="space-y-2.5 pr-6">
           <SheetTitle> Cart</SheetTitle>
         </SheetHeader>
-        {itemCount > 0 ? (
+        {itemCount > 0 && products ? (
           <>
             <div className="flex w-full flex-col pr-6">
               <ScrollArea>
-                {items.map(({ product }) => (
+                {products.map((product) => (
                   <CartItem key={product.id} product={product} />
                 ))}
               </ScrollArea>

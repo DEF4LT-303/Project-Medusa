@@ -1,8 +1,8 @@
-import { PricedProduct } from "@medusajs/medusa/dist/types/pricing";
+import { StoreProductsRes } from "@medusajs/medusa";
 import { ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 
-const CartItem = ({ product }: { product: PricedProduct }) => {
+const CartItem = ({ product }: StoreProductsRes) => {
   const image = "";
 
   return (
@@ -12,9 +12,11 @@ const CartItem = ({ product }: { product: PricedProduct }) => {
           <div className="relative aspect-square h-16 w-16 min-w-fit overflow-hidden rounded">
             {typeof image === "string" ? (
               <Image
-                src={image}
+                src={product.thumbnail ?? ""}
+                width={100}
+                height={100}
                 className="absolute object-cover h-16 w-16"
-                alt={product.title}
+                alt="Product Image"
               />
             ) : (
               <div className="flex h-full items-center justify-center bg-secondary">
@@ -32,10 +34,10 @@ const CartItem = ({ product }: { product: PricedProduct }) => {
             </span>
 
             <span className="line-clamp-1 text-xs capitalize text-muted-foreground">
-              Category: NFT
+              {product.handle}
             </span>
             <span className="line-clamp-1 text-xs mt-1 text-muted-foreground">
-              {product.title}
+              {product.variants[0].prices[0].amount}
             </span>
           </div>
         </div>
