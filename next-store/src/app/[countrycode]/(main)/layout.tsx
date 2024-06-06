@@ -10,7 +10,7 @@ export default async function GeneralLayout({
   const customer = await getCustomer().catch(() => null);
 
   return (
-    <section>
+    <section className="flex flex-col min-h-screen">
       <Navbar customer={customer} />
       {children}
       <Footer />
