@@ -1,21 +1,33 @@
 "use client";
 
-import { useProducts } from "medusa-react";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import ProductCollection from "@/components/product/template/product-collection";
+import { useCollections } from "medusa-react";
 
 const Products = () => {
-  const { products, isLoading } = useProducts();
+  const { collections, isLoading } = useCollections();
 
   return (
     <div>
-      {isLoading && <span>Loading...</span>}
-      {products && !products.length && <span>No Products</span>}
-      {products && products.length > 0 && (
-        <ul>
-          {products.map((product) => (
-            <li key={product.id}>{product.title}</li>
-          ))}
-        </ul>
-      )}
+      <MaxWidthWrapper>
+        <>
+          <p className="flex justify-center text-3xl mt-3 p-3 font-bold text-blue-500">
+            All Products
+          </p>
+          {isLoading && <span>Loading...</span>}
+
+          {collections && collections.length > 0 && (
+            <div className="flex flex-col mt-5">
+              {collections.map((collection) => (
+                <ProductCollection
+                  key={collection.id}
+                  collection={collection}
+                />
+              ))}
+            </div>
+          )}
+        </>
+      </MaxWidthWrapper>
     </div>
   );
 };
