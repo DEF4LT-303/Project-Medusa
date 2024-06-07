@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut } from "@/app/actions/sign-in";
+import { signOut } from "@/app/actions/user-actions";
 import {
   DropdownMenu,
   DropdownMenuContent,

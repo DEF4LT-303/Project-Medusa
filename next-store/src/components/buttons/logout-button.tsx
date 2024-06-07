@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut } from "@/app/actions/sign-in";
+import { signOut } from "@/app/actions/user-actions";
 import { useParams } from "next/navigation";
 import { Button } from "../ui/button";
 

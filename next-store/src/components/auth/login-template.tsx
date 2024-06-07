@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { logCustomerIn } from "@/app/actions/sign-in";
+import { logCustomerIn } from "@/app/actions/user-actions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,7 +21,7 @@ export function LoginForm() {
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-160px)]">
-      <Card className="mx-auto max-w-sm">
+      <Card className="mx-auto max-w-sm my-3">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>

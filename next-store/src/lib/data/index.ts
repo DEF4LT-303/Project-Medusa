@@ -1,7 +1,8 @@
 'use server';
 
 import {
-  StorePostAuthReq
+  StorePostAuthReq,
+  StorePostCustomersReq
 } from "@medusajs/medusa";
 import { cookies } from "next/headers";
 import { cache } from "react";
@@ -57,6 +58,15 @@ export const getSession = cache(async function getSession() {
     .then(({ customer }) => customer)
     .catch((err) => medusaError(err))
 })
+
+export async function createCustomer(data: StorePostCustomersReq) {
+  const headers = getMedusaHeaders(["customer"])
+
+  return medusaClient.customers
+    .create(data, headers)
+    .then(({ customer }) => customer)
+    .catch((err) => medusaError(err))
+}
 
 export async function getCustomer() {
   const headers = getMedusaHeaders(["customer"])
