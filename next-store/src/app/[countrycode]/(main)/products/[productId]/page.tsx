@@ -21,7 +21,7 @@ const SingleProductPage = ({ params }: { params: { productId: string } }) => {
           <div className="flex flex-col md:flex-row justify-center items-start gap-5 p-5">
             <ProductInfo product={product} />
             <Thumbnail thumbnail={product?.thumbnail} />
-            <ProductVariant />
+            <ProductVariant product={product} />
           </div>
         )}
       </div>
