@@ -1,9 +1,22 @@
-import { StoreProductsRes } from "@medusajs/medusa";
-import { ImageIcon, X } from "lucide-react";
-import Image from "next/image";
+"use client";
 
-const CartItem = ({ product }: StoreProductsRes) => {
-  const image = "";
+import { deleteLineItem } from "@/app/actions/cart-actions";
+import { LineItem } from "@medusajs/medusa";
+import { ImageIcon, Loader2, X } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+
+const CartItem = ({ item }: { item: LineItem }) => {
+  const image = item?.thumbnail;
+
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async (id: string) => {
+    setIsDeleting(true);
+    await deleteLineItem(id).catch((err) => {
+      setIsDeleting(false);
+    });
+  };
 
   return (
     <div className="space-y-3 py-2">
@@ -12,7 +25,7 @@ const CartItem = ({ product }: StoreProductsRes) => {
           <div className="relative aspect-square h-16 w-16 min-w-fit overflow-hidden rounded">
             {typeof image === "string" ? (
               <Image
-                src={product.thumbnail ?? ""}
+                src={image || ""}
                 width={100}
                 height={100}
                 className="absolute object-cover h-16 w-16"
@@ -30,24 +43,31 @@ const CartItem = ({ product }: StoreProductsRes) => {
 
           <div className="flex flex-col self-start">
             <span className="line-clamp-1 text-sm font-medium mb-1">
-              {product.title}
+              {item?.title}
             </span>
 
             <span className="line-clamp-1 text-xs capitalize text-muted-foreground">
-              {product.handle}
+              {item?.variant.title}
             </span>
             <span className="line-clamp-1 text-xs mt-1 text-muted-foreground">
-              {product.variants[0].prices[0].amount}
+              {item?.quantity} x {item?.unit_price}
             </span>
           </div>
         </div>
 
         <div className="flex flex-col font-medium ">
           <div className="text-xs text-muted-foreground">
-            <button className="flex items-center gap-0.5 mr-2">
-              <X className="h-3 w-3" />
-              Remove
-            </button>
+            {isDeleting ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <button
+                className="flex items-center gap-0.5 mr-2"
+                onClick={() => handleDelete(item.id)}
+              >
+                <X className="h-3 w-3" />
+                Remove
+              </button>
+            )}
           </div>
         </div>
       </div>

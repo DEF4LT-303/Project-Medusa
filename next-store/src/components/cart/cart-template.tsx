@@ -1,9 +1,12 @@
 "use client";
 
+import { Badge } from "@nextui-org/react";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ShoppingCart } from "lucide-react";
+import { Cart } from "medusa-react";
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
-import { ScrollArea } from "../ui/scroll-area";
+import { Separator } from "../ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -12,16 +15,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-
-import { Badge } from "@nextui-org/react";
-import { Separator } from "@radix-ui/react-separator";
-import { useProducts } from "medusa-react";
 import CartItem from "./cart-item";
 
-const Cart = () => {
-  const { products, isLoading } = useProducts({ limit: 3 });
-  const itemCount = 3;
-  const fee = 1;
+const CartSheet = ({
+  cart: cartState,
+}: {
+  cart?: Omit<Cart, "beforeInsert" | "afterLoad"> | null;
+}) => {
+  const totalItems =
+    cartState?.items?.reduce((acc, item) => {
+      return acc + item.quantity;
+    }, 0) || 0;
 
   return (
     <Sheet>
@@ -29,10 +33,10 @@ const Cart = () => {
         aria-hidden="true"
         className="group -m-2 flex items-center p-2 relative"
       >
-        {itemCount > 0 ? (
+        {totalItems > 0 ? (
           <Badge
             color="primary"
-            content={itemCount}
+            content={totalItems}
             shape="circle"
             className="absolute top-1 -right-0 flex items-center justify-center w-5 h-5 bg-red-500 text-primary-background text-sm rounded-full shadow-md"
           >
@@ -46,13 +50,17 @@ const Cart = () => {
         <SheetHeader className="space-y-2.5 pr-6">
           <SheetTitle> Cart</SheetTitle>
         </SheetHeader>
-        {itemCount > 0 && products ? (
+        {cartState && cartState.items?.length ? (
           <>
             <div className="flex w-full flex-col pr-6">
               <ScrollArea>
-                {products.map((product) => (
-                  <CartItem key={product.id} product={product} />
-                ))}
+                {cartState.items
+                  .sort((a, b) => {
+                    return a.created_at > b.created_at ? -1 : 1;
+                  })
+                  .map((item) => (
+                    <CartItem key={item.id} item={item} />
+                  ))}
               </ScrollArea>
             </div>
 
@@ -65,12 +73,12 @@ const Cart = () => {
                 </div>
                 <div className="flex">
                   <span className="flex-1">Transaction Fee</span>
-                  <span>{fee}</span>
+                  <span>{1}</span>
                 </div>
 
                 <div className="flex">
                   <span className="flex-1">Total</span>
-                  <span>{fee}</span>
+                  <span>{1}</span>
                 </div>
               </div>
               <SheetFooter>
@@ -109,4 +117,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartSheet;

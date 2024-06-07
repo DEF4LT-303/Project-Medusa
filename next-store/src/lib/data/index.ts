@@ -1,7 +1,9 @@
 'use server';
 
 import {
+  Region,
   StorePostAuthReq,
+  StorePostCartsCartReq,
   StorePostCustomersReq
 } from "@medusajs/medusa";
 import { cookies } from "next/headers";
@@ -26,6 +28,57 @@ const getMedusaHeaders = (tags: string[] = []) => {
 
   return headers
 }
+
+// Region APIs
+export const listRegions = cache(async function () {
+  return medusaClient.regions
+    .list()
+    .then(({ regions }) => regions)
+    .catch((err) => {
+      console.log(err)
+      return null
+    })
+})
+
+export const retrieveRegion = cache(async function (id: string) {
+  const headers = getMedusaHeaders(["regions"])
+
+  return medusaClient.regions
+    .retrieve(id, headers)
+    .then(({ region }) => region)
+    .catch((err) => medusaError(err))
+})
+
+const regionMap = new Map<string, Region>()
+
+export const getRegion = cache(async function (countryCode: string) {
+  try {
+    if (regionMap.has(countryCode)) {
+      return regionMap.get(countryCode)
+    }
+
+    const regions = await listRegions()
+
+    if (!regions) {
+      return null
+    }
+
+    regions.forEach((region) => {
+      region.countries.forEach((c) => {
+        regionMap.set(c.iso_2, region)
+      })
+    })
+
+    const region = countryCode
+      ? regionMap.get(countryCode)
+      : regionMap.get("us")
+
+    return region
+  } catch (e: any) {
+    console.log(e.toString())
+    return null
+  }
+})
 
 // User APIs
 export async function getToken(credentials: StorePostAuthReq) {
@@ -85,4 +138,111 @@ export async function getProducts() {
     .list(headers)
     .then(({ products }) => products)
     .catch((err) => medusaError(err))
+}
+
+export const getProductsById = cache(async function ({
+  ids,
+  regionId,
+}: {
+  ids: string[]
+  regionId: string
+}) {
+  const headers = getMedusaHeaders(["products"])
+
+  return medusaClient.products
+    .list({ id: ids, region_id: regionId }, headers)
+    .then(({ products }) => products)
+    .catch((err) => {
+      console.log(err)
+      return null
+    })
+})
+
+// Cart APIs
+export async function createCart(data = {}) {
+  const headers = getMedusaHeaders(["cart"])
+
+  return medusaClient.carts
+    .create(data, headers)
+    .then(({ cart }) => cart)
+    .catch((err) => {
+      console.log(err)
+      return null
+    })
+}
+
+export async function updateCart(cartId: string, data: StorePostCartsCartReq) {
+  const headers = getMedusaHeaders(["cart"])
+
+  return medusaClient.carts
+    .update(cartId, data, headers)
+    .then(({ cart }) => cart)
+    .catch((error) => medusaError(error))
+}
+
+export const getCart = cache(async function (cartId: string) {
+  const headers = getMedusaHeaders(["cart"])
+
+  return medusaClient.carts
+    .retrieve(cartId, headers)
+    .then(({ cart }) => cart)
+    .catch((err) => {
+      console.log(err)
+      return null
+    })
+})
+
+export async function addItem({
+  cartId,
+  variantId,
+  quantity,
+}: {
+  cartId: string
+  variantId: string
+  quantity: number
+}) {
+  const headers = getMedusaHeaders(["cart"])
+
+  return medusaClient.carts.lineItems
+    .create(cartId, { variant_id: variantId, quantity }, headers)
+    .then(({ cart }) => cart)
+    .catch((err) => {
+      console.log(err)
+      return null
+    })
+}
+
+export async function updateItem({
+  cartId,
+  lineId,
+  quantity,
+}: {
+  cartId: string
+  lineId: string
+  quantity: number
+}) {
+  const headers = getMedusaHeaders(["cart"])
+
+  return medusaClient.carts.lineItems
+    .update(cartId, lineId, { quantity }, headers)
+    .then(({ cart }) => cart)
+    .catch((err) => medusaError(err))
+}
+
+export async function removeItem({
+  cartId,
+  lineId,
+}: {
+  cartId: string
+  lineId: string
+}) {
+  const headers = getMedusaHeaders(["cart"])
+
+  return medusaClient.carts.lineItems
+    .delete(cartId, lineId, headers)
+    .then(({ cart }) => cart)
+    .catch((err) => {
+      console.log(err)
+      return null
+    })
 }

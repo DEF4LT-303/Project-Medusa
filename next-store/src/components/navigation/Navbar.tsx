@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { Customer } from "@medusajs/medusa";
 import UserButton from "../buttons/user-button";
-import Cart from "../cart/cart";
+import CartButton from "../cart/CartButton";
 import MaxWidthWrapper from "../MaxWidthWrapper";
 import { buttonVariants } from "../ui/button";
 import MobileNav from "./MobileNavbar";
@@ -78,7 +78,7 @@ const Navbar = ({ customer }: NavbarProps) => {
                   )}
 
                   <div className="ml-4 flow-root lg:ml-6">
-                    <Cart />
+                    <CartButton />
                   </div>
                 </div>
                 <div className="lg:hidden">
@@ -92,7 +92,7 @@ const Navbar = ({ customer }: NavbarProps) => {
                         />
                       </>
                     )}
-                    <Cart />
+                    <CartButton />
                   </div>
                 </div>
               </div>

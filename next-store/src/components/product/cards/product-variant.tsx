@@ -1,3 +1,4 @@
+import { addToCart } from "@/app/actions/cart-actions";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ProductOption, StoreProductsRes } from "@medusajs/medusa";
@@ -137,12 +138,11 @@ const ProductVariant = ({ product }: StoreProductsRes) => {
 
     setIsAdding(true);
 
-    // await addToCart({
-    //   variantId: variant.id,
-    //   quantity: 1,
-    //   countryCode,
-    // })
-    console.log(options);
+    await addToCart({
+      variantId: variant.id,
+      quantity: 1,
+      countryCode,
+    });
 
     setIsAdding(false);
   };
