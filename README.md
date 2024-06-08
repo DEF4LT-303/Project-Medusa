@@ -24,7 +24,7 @@ Admin Panel: https://project-medusa-backend.vercel.app/
 ### Clone the repo
 Start by cloning [this repo](https://github.com/DEF4LT-303/Project-Medusa/tree/starter "this repo")
 ```shell
-git clone -b starter https://github.com/DEF4LT-303/Project-Medusa.git
+git clone https://github.com/DEF4LT-303/Project-Medusa.git
 ```
 
 # Setting up the Backend
@@ -71,7 +71,7 @@ The admin login credential is <br>
 Once backend is running, navigate to the storefront and add environment variables:
 
 ```shell
-cd medusa-storefront/
+cd next-store/
 cp .env.template .env.local
 ```
 
