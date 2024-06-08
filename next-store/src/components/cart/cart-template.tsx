@@ -27,6 +27,9 @@ const CartSheet = ({
       return acc + item.quantity;
     }, 0) || 0;
 
+  const totalPrice =
+    cartState?.items?.reduce((acc, item) => acc + (item.total || 0), 0) || 0;
+
   return (
     <Sheet>
       <SheetTrigger
@@ -71,14 +74,10 @@ const CartSheet = ({
                   <span className="flex-1">Shipping</span>
                   <span>Free</span>
                 </div>
-                <div className="flex">
-                  <span className="flex-1">Transaction Fee</span>
-                  <span>{1}</span>
-                </div>
 
                 <div className="flex">
                   <span className="flex-1">Total</span>
-                  <span>{1}</span>
+                  <span className="font-semibold">BDT {totalPrice}</span>
                 </div>
               </div>
               <SheetFooter>
