@@ -14,7 +14,15 @@
 
 <p align="center">
 Hosted on Vercel <br>
-Storefront: https://project-medusa-storefront.vercel.app/ <br>
+Storefront: **Medusa Endpoint**
+https://project-medusa-production.up.railway.app
+
+**Medusa Admin:**
+https://project-medusa-backend.vercel.app
+
+**Medusa Storefront**
+https://project-medusa-storefront.vercel.app
+https://project-medusa.vercel.app <br>
 Admin Panel: https://project-medusa-backend.vercel.app/
 </p>
 
