@@ -1,22 +1,31 @@
 "use client";
 
-import { PRODUCT_CATEGORIS } from "@/config";
 import { cn } from "@/lib/utils";
+import { ProductCollection } from "@medusajs/medusa";
 import { ChevronDown } from "lucide-react";
+import { useProducts } from "medusa-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
-type Category = (typeof PRODUCT_CATEGORIS)[number];
-
 interface NavItemProps {
-  category: Category;
+  collection: ProductCollection;
   handleOpen: () => void;
   isOpen: boolean;
   isAnyOpen: boolean;
 }
 
-const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
+const NavItem = ({
+  isAnyOpen,
+  collection,
+  handleOpen,
+  isOpen,
+}: NavItemProps) => {
+  const { products, isLoading } = useProducts({
+    collection_id: [collection.id],
+    limit: 3,
+  });
+
   return (
     <div className="flex">
       <div className="relative flex items-center">
@@ -25,7 +34,7 @@ const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
           onClick={handleOpen}
           variant={isOpen ? "secondary" : "ghost"}
         >
-          {category.label}
+          {collection.title}
           <ChevronDown
             className={cn("h-4 w-4 transition-all text-muted-foreground", {
               "-rotate-180": isOpen,
@@ -51,32 +60,33 @@ const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
             <div className="mx-auto max-w-7xl px-8">
               <div className="grid grid-cols-4 gap-x-8 gap-y-10 py-16">
                 <div className="col-span-4 col-start-1 grid grid-cols-3 gap-x-8">
-                  {category.featured.map((item) => (
-                    <div
-                      key={item.name}
-                      className="group relative text-base sm:text-sm"
-                    >
-                      <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                        <Image
-                          src={item.imageSrc}
-                          alt="product category image"
-                          fill
-                          className="object-cover object-center"
-                        />
-                      </div>
-
-                      <Link
-                        href={item.href}
-                        className="mt-6 block font-medium text-muted-foreground"
+                  {products &&
+                    products.map((item) => (
+                      <div
+                        key={item.id}
+                        className="group relative text-base sm:text-sm"
                       >
-                        {item.name}
-                      </Link>
+                        <div className="relative aspect-video overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                          <Image
+                            src={item.thumbnail || ""}
+                            alt="product collection image"
+                            fill
+                            className="object-cover object-center"
+                          />
+                        </div>
 
-                      <p className="mt-1" aria-hidden="true">
-                        Shop now
-                      </p>
-                    </div>
-                  ))}
+                        <Link
+                          href={`/products/${item.id}`}
+                          className="mt-6 block font-medium text-muted-foreground"
+                        >
+                          {item.title}
+                        </Link>
+
+                        <p className="mt-1" aria-hidden="true">
+                          Shop now
+                        </p>
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>

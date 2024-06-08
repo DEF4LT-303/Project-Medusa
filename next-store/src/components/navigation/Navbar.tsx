@@ -23,7 +23,7 @@ const Navbar = ({ customer }: NavbarProps) => {
         <MaxWidthWrapper>
           <div className="border-b border-gray-500">
             <div className="flex h-16 items-center">
-              <MobileNav />
+              <MobileNav customer={user} />
               <div className="ml-4 flex lg:ml-0">
                 <Link href="/">
                   <p className="font-semibold text-xl text-blue-500">Medusa</p>

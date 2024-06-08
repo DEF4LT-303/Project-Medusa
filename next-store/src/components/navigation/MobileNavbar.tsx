@@ -1,18 +1,60 @@
 "use client";
 
-import { PRODUCT_CATEGORIS } from "@/config";
+import { Customer, ProductCollection } from "@medusajs/medusa";
 import { Menu, X } from "lucide-react";
+import { useCollections, useProducts } from "medusa-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const MobileNav = () => {
+type NavbarProps = {
+  customer: Omit<Customer, "password_hash"> | null;
+};
+
+const ProductsByCollection = ({
+  collection,
+}: {
+  collection: ProductCollection;
+}) => {
+  const { products } = useProducts({
+    collection_id: [collection.id],
+    limit: 3,
+  });
+
+  return (
+    <div className="grid grid-cols-2 gap-y-10 gap-x-4">
+      {products &&
+        products.map((item) => (
+          <div key={item.id} className="group relative text-sm">
+            <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+              <Image
+                fill
+                src={item.thumbnail || ""}
+                alt="product category image"
+                className="object-cover object-center"
+              />
+            </div>
+            <Link
+              href={`/products/${item.id}`}
+              className="mt-6 block font-medium text-muted-foreground"
+            >
+              {item.title}
+            </Link>
+          </div>
+        ))}
+    </div>
+  );
+};
+
+const MobileNav = ({ customer }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const pathname = usePathname();
 
-  const user = false;
+  const user = customer;
+
+  const { collections } = useCollections({ limit: 3 });
 
   // whenever we click an item in the menu and navigate away, we want to close the menu
   useEffect(() => {
@@ -65,41 +107,23 @@ const MobileNav = () => {
 
             <div className="mt-2">
               <ul>
-                {PRODUCT_CATEGORIS.map((category) => (
-                  <li
-                    key={category.label}
-                    className="space-y-10 px-4 pb-8 pt-10"
-                  >
-                    <div className="border-b border-gray-200">
-                      <div className="-mb-px flex">
-                        <p className="border-transparent text-muted-foreground flex-1 whitespace-nowrap border-b-2 py-4 text-base font-medium">
-                          {category.label}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-y-10 gap-x-4">
-                      {category.featured.map((item) => (
-                        <div key={item.name} className="group relative text-sm">
-                          <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                            <Image
-                              fill
-                              src={item.imageSrc}
-                              alt="product category image"
-                              className="object-cover object-center"
-                            />
-                          </div>
-                          <Link
-                            href={item.href}
-                            className="mt-6 block font-medium text-muted-foreground"
-                          >
-                            {item.name}
-                          </Link>
+                {collections &&
+                  collections.map((collection) => (
+                    <li
+                      key={collection.id}
+                      className="space-y-10 px-4 pb-8 pt-10"
+                    >
+                      <div className="border-b border-gray-200">
+                        <div className="-mb-px flex">
+                          <p className="border-transparent text-muted-foreground flex-1 whitespace-nowrap border-b-2 py-4 text-base font-medium">
+                            {collection.title}
+                          </p>
                         </div>
-                      ))}
-                    </div>
-                  </li>
-                ))}
+                      </div>
+
+                      <ProductsByCollection collection={collection} />
+                    </li>
+                  ))}
               </ul>
             </div>
 
