@@ -1,6 +1,5 @@
 import { enrichLineItems, retrieveCart } from "@/app/actions/cart-actions";
 import { LineItem } from "@medusajs/medusa";
-import { Loader2 } from "lucide-react";
 import { Cart } from "medusa-react";
 import { useEffect, useState } from "react";
 import CartSheet from "./cart-template";
@@ -25,14 +24,6 @@ const CartButton = () => {
 
     fetchCart();
   }, [cart]);
-
-  if (!cart) {
-    return (
-      <div>
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-      </div>
-    );
-  }
 
   return <CartSheet cart={cart} />;
 };

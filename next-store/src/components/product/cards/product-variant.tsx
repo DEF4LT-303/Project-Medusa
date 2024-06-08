@@ -147,8 +147,23 @@ const ProductVariant = ({ product }: StoreProductsRes) => {
     setIsAdding(false);
   };
 
+  const price = useMemo(() => {
+    let rounded_price = 0;
+    if (variant) {
+      const base_price = variant.prices.find(
+        (p) => p.currency_code === "bdt"
+      )?.amount;
+      if (base_price) {
+        rounded_price = base_price / 100;
+      }
+      return rounded_price;
+    }
+
+    return null;
+  }, [variant]);
+
   return (
-    <div className="flex flex-col justify-between items-center gap-3 w-full md:w-1/2 h-full ">
+    <div className="flex flex-col justify-between items-center gap-5 w-full md:w-1/2 h-full ">
       <div className="flex flex-col gap-2 justify-start items-start w-full">
         <p className="font-semibold text-lg">Choose a variant</p>
         <div className="flex flex-col justify-between w-full gap-3">
@@ -166,7 +181,8 @@ const ProductVariant = ({ product }: StoreProductsRes) => {
             ))}
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-2">
+        {variant && <p className="font-semibold">Price: BDT {price}</p>}
         <Button
           variant="secondary"
           className="w-full hover:bg-emerald-400"
