@@ -14,19 +14,11 @@
 
 <p align="center">
 Hosted on Vercel <br>
-Storefront: **Medusa Endpoint**
-https://project-medusa-production.up.railway.app
-
-**Medusa Admin:**
-https://project-medusa-backend.vercel.app
-
-**Medusa Storefront**
-https://project-medusa-storefront.vercel.app
-https://project-medusa.vercel.app <br>
-Admin Panel: https://project-medusa-backend.vercel.app/
+Storefront: https://project-medusa.vercel.app/ <br>
+Admin Panel: https://project-medusa-backend.vercel.app/ <br>
+API Endpoint: https://project-medusa-production.up.railway.app/
 </p>
-
-
+  
 # How to run locally
 
 ### Clone the repo
